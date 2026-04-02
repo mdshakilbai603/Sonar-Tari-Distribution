@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সোনার তরী ডিস্ট্রিবিউশন | Exclusive Inventory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;500;700&display=swap');
+        
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Intro Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Neon Glow Button */
+        .btn-neon {
+            background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+            transition: 0.3s;
+        }
+
+        .btn-neon:hover {
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.8);
+            transform: scale(1.05);
+        }
+
+        .admin-controls {
+            display: none; /* Hidden by default */
+        }
+
+        .edit-active .admin-controls {
+            display: block;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <nav class="p-6 flex justify-between items-center reveal" style="animation-delay: 0.2s;">
+        <div>
+            <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+                সোনার তরী ডিস্ট্রিবিউশন
+            </h1>
+            <p class="text-xs text-gray-400 tracking-widest uppercase">Premium Stationery & Sports</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <button onclick="toggleAdmin()" class="text-xs bg-gray-700 px-3 py-1 rounded-full hover:bg-gray-600 transition">
+                <i class="fas fa-user-shield mr-1"></i> Admin Mode
+            </button>
+            <a href="tel:01923264607" class="hidden md:block text-cyan-400 font-bold">০১৯২৩২৬৪৬০৭</a>
+        </div>
+    </nav>
+
+    <div class="text-center my-10 reveal" style="animation-delay: 0.4s;">
+        <p class="text-gray-400"><i class="fas fa-map-marker-alt mr-2 text-red-500"></i> প্রধান সড়ক, পুরান বাজার, মাদারীপুর সদর</p>
+    </div>
+
+    <main class="container mx-auto px-4 pb-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="product-container">
+            
+            <div class="glass-card p-4 relative reveal" style="animation-delay: 0.6s;">
+                <div class="admin-controls absolute top-2 right-2 z-10">
+                    <button class="bg-yellow-500 p-2 rounded-full text-black hover:bg-yellow-400"><i class="fas fa-edit"></i></button>
+                </div>
+                <div class="overflow-hidden rounded-xl mb-4 h-48 bg-white flex items-center justify-center">
+                    <img src="IMG-20260402-WA0013.jpg" alt="Football" class="max-h-full object-contain p-2">
+                </div>
+                <h3 class="text-lg font-semibold mb-1">FIFA কাতার ২০২২ বল</h3>
+                <p class="text-cyan-400 font-bold mb-4">৳ ১,৫০০</p>
+                <a href="https://wa.me/8801923264607?text=আমি এই ফুটবলটি নিতে চাই" class="btn-neon w-full block text-center py-3 rounded-lg font-bold">
+                    <i class="fab fa-whatsapp mr-2"></i> অর্ডার করুন
+                </a>
+            </div>
+
+            <div class="glass-card p-4 relative reveal" style="animation-delay: 0.8s;">
+                <div class="admin-controls absolute top-2 right-2 z-10">
+                    <button class="bg-yellow-500 p-2 rounded-full text-black hover:bg-yellow-400"><i class="fas fa-edit"></i></button>
+                </div>
+                <div class="overflow-hidden rounded-xl mb-4 h-48 bg-white flex items-center justify-center">
+                    <img src="IMG-20260402-WA0017.jpg" alt="Rubiks" class="max-h-full object-contain p-2">
+                </div>
+                <h3 class="text-lg font-semibold mb-1">প্রিমিয়াম রুবিকস কিউব সেট</h3>
+                <p class="text-cyan-400 font-bold mb-4">৳ ৪০০</p>
+                <a href="#" class="btn-neon w-full block text-center py-3 rounded-lg font-bold">
+                    <i class="fab fa-whatsapp mr-2"></i> অর্ডার করুন
+                </a>
+            </div>
+
+            <div class="admin-controls border-2 border-dashed border-gray-600 rounded-20 flex flex-col items-center justify-center p-8 opacity-50 hover:opacity-100 cursor-pointer transition">
+                <i class="fas fa-plus-circle text-4xl mb-2"></i>
+                <p>নতুন পণ্য যোগ করুন</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-black/50 backdrop-blur-md p-10 mt-20 border-t border-white/10">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div>
+                <h2 class="text-xl font-bold mb-4 text-cyan-400">সোনার তরী ডিস্ট্রিবিউশন</h2>
+                <p class="text-gray-400 text-sm">মাদারীপুরের সেরা পাইকারি ও খুচরা স্টেশনারি ডিস্ট্রিবিউটর। আমরা সরাসরি মানসম্মত পণ্য পৌঁছে দিই আপনার দোকানে।</p>
+            </div>
+            <div>
+                <h3 class="font-bold mb-4">লিংক</h3>
+                <ul class="text-gray-400 space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-white transition">হোম</a></li>
+                    <li><a href="#" class="hover:text-white transition">সব পণ্য</a></li>
+                    <li><a href="#" class="hover:text-white transition">আমাদের সম্পর্কে</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold mb-4">অফিস</h3>
+                <p class="text-gray-400 text-sm">প্রধান সড়ক, পুরান বাজার, মাদারীপুর সদর।</p>
+                <p class="text-gray-400 text-sm mt-2">ফোন: ০১৯২৩২৬৪৬০৭</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleAdmin() {
+            document.body.classList.toggle('edit-active');
+            alert(document.body.classList.contains('edit-active') ? 'এডমিন মোড চালু হয়েছে! এখন আপনি এডিট করতে পারবেন।' : 'এডমিন মোড বন্ধ হয়েছে।');
+        }
+    </script>
+</body>
+</html>
