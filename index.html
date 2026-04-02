@@ -5,153 +5,169 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>সোনার তরী ডিস্ট্রিবিউশন | Exclusive Inventory</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;500;700&display=swap');
         
         body {
             font-family: 'Hind Siliguri', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white;
+            background-color: #050505;
+            color: #ffffff;
             overflow-x: hidden;
         }
 
-        /* Intro Animation */
-        .reveal {
+        /* Intro Animation Styles */
+        #intro-layer {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .intro-text {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffd700, #b8860b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s ease-out forwards;
         }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Glassmorphism & Effects */
+        .premium-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Glassmorphism Card */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
+        .premium-card:hover {
+            border-color: #ffd700;
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.1);
+        }
+
+        .gold-glow {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Admin Modal */
+        #admin-modal {
+            display: none;
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .glass-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        /* Neon Glow Button */
-        .btn-neon {
-            background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
-            transition: 0.3s;
-        }
-
-        .btn-neon:hover {
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.8);
-            transform: scale(1.05);
-        }
-
-        .admin-controls {
-            display: none; /* Hidden by default */
-        }
-
-        .edit-active .admin-controls {
-            display: block;
         }
     </style>
 </head>
-<body class="min-h-screen">
+<body>
 
-    <nav class="p-6 flex justify-between items-center reveal" style="animation-delay: 0.2s;">
-        <div>
-            <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
-                সোনার তরী ডিস্ট্রিবিউশন
-            </h1>
-            <p class="text-xs text-gray-400 tracking-widest uppercase">Premium Stationery & Sports</p>
-        </div>
-        <div class="flex items-center gap-4">
-            <button onclick="toggleAdmin()" class="text-xs bg-gray-700 px-3 py-1 rounded-full hover:bg-gray-600 transition">
-                <i class="fas fa-user-shield mr-1"></i> Admin Mode
-            </button>
-            <a href="tel:01923264607" class="hidden md:block text-cyan-400 font-bold">০১৯২৩২৬৪৬০৭</a>
-        </div>
-    </nav>
-
-    <div class="text-center my-10 reveal" style="animation-delay: 0.4s;">
-        <p class="text-gray-400"><i class="fas fa-map-marker-alt mr-2 text-red-500"></i> প্রধান সড়ক, পুরান বাজার, মাদারীপুর সদর</p>
+    <div id="intro-layer">
+        <h1 class="intro-text">সোনার তরী ডিস্ট্রিবিউশন</h1>
     </div>
 
-    <main class="container mx-auto px-4 pb-20">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="product-container">
-            
-            <div class="glass-card p-4 relative reveal" style="animation-delay: 0.6s;">
-                <div class="admin-controls absolute top-2 right-2 z-10">
-                    <button class="bg-yellow-500 p-2 rounded-full text-black hover:bg-yellow-400"><i class="fas fa-edit"></i></button>
-                </div>
-                <div class="overflow-hidden rounded-xl mb-4 h-48 bg-white flex items-center justify-center">
-                    <img src="IMG-20260402-WA0013.jpg" alt="Football" class="max-h-full object-contain p-2">
-                </div>
-                <h3 class="text-lg font-semibold mb-1">FIFA কাতার ২০২২ বল</h3>
-                <p class="text-cyan-400 font-bold mb-4">৳ ১,৫০০</p>
-                <a href="https://wa.me/8801923264607?text=আমি এই ফুটবলটি নিতে চাই" class="btn-neon w-full block text-center py-3 rounded-lg font-bold">
-                    <i class="fab fa-whatsapp mr-2"></i> অর্ডার করুন
-                </a>
+    <div id="main-content" style="opacity: 0;">
+        
+        <nav class="container mx-auto p-6 flex justify-between items-center border-b border-white/5">
+            <div class="flex flex-col">
+                <span class="text-2xl font-bold text-yellow-500">সোনার তরী</span>
+                <span class="text-[10px] tracking-[4px] uppercase text-gray-400">Distribution House</span>
             </div>
-
-            <div class="glass-card p-4 relative reveal" style="animation-delay: 0.8s;">
-                <div class="admin-controls absolute top-2 right-2 z-10">
-                    <button class="bg-yellow-500 p-2 rounded-full text-black hover:bg-yellow-400"><i class="fas fa-edit"></i></button>
-                </div>
-                <div class="overflow-hidden rounded-xl mb-4 h-48 bg-white flex items-center justify-center">
-                    <img src="IMG-20260402-WA0017.jpg" alt="Rubiks" class="max-h-full object-contain p-2">
-                </div>
-                <h3 class="text-lg font-semibold mb-1">প্রিমিয়াম রুবিকস কিউব সেট</h3>
-                <p class="text-cyan-400 font-bold mb-4">৳ ৪০০</p>
-                <a href="#" class="btn-neon w-full block text-center py-3 rounded-lg font-bold">
-                    <i class="fab fa-whatsapp mr-2"></i> অর্ডার করুন
-                </a>
+            <div class="flex items-center gap-6">
+                <button onclick="openAdmin()" class="bg-yellow-600/20 text-yellow-500 px-4 py-2 rounded-full border border-yellow-600/50 hover:bg-yellow-600 hover:text-black transition text-sm">
+                    <i class="fas fa-lock mr-2"></i> Admin Panel
+                </button>
             </div>
+        </nav>
 
-            <div class="admin-controls border-2 border-dashed border-gray-600 rounded-20 flex flex-col items-center justify-center p-8 opacity-50 hover:opacity-100 cursor-pointer transition">
-                <i class="fas fa-plus-circle text-4xl mb-2"></i>
-                <p>নতুন পণ্য যোগ করুন</p>
-            </div>
-
+        <div class="bg-yellow-600/10 py-3 text-center text-sm text-yellow-200 border-b border-yellow-600/20">
+            <i class="fas fa-map-marker-alt mr-2"></i> প্রধান সড়ক, পুরান বাজার, মাদারীপুর সদর | <i class="fas fa-phone-alt ml-4 mr-2"></i> ০১৯২৩২৬৪৬০৭
         </div>
-    </main>
 
-    <footer class="bg-black/50 backdrop-blur-md p-10 mt-20 border-t border-white/10">
-        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div>
-                <h2 class="text-xl font-bold mb-4 text-cyan-400">সোনার তরী ডিস্ট্রিবিউশন</h2>
-                <p class="text-gray-400 text-sm">মাদারীপুরের সেরা পাইকারি ও খুচরা স্টেশনারি ডিস্ট্রিবিউটর। আমরা সরাসরি মানসম্মত পণ্য পৌঁছে দিই আপনার দোকানে।</p>
+        <section class="container mx-auto px-4 py-16">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-bold">আমাদের ইনভেন্টরি</h2>
+                    <div class="h-1 w-20 bg-yellow-500 mt-2"></div>
+                </div>
+                <p class="text-gray-400 hidden md:block">এক্সক্লুসিভ স্টেশনারি ও স্পোর্টস সামগ্রী</p>
             </div>
-            <div>
-                <h3 class="font-bold mb-4">লিংক</h3>
-                <ul class="text-gray-400 space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-white transition">হোম</a></li>
-                    <li><a href="#" class="hover:text-white transition">সব পণ্য</a></li>
-                    <li><a href="#" class="hover:text-white transition">আমাদের সম্পর্কে</a></li>
-                </ul>
+
+            <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="premium-card p-6 flex flex-col items-center justify-center border-dashed border-2 border-gray-700 h-[400px]">
+                   <p class="text-gray-500">পণ্য দেখতে এডমিন প্যানেল থেকে আপলোড করুন</p>
+                </div>
             </div>
-            <div>
-                <h3 class="font-bold mb-4">অফিস</h3>
-                <p class="text-gray-400 text-sm">প্রধান সড়ক, পুরান বাজার, মাদারীপুর সদর।</p>
-                <p class="text-gray-400 text-sm mt-2">ফোন: ০১৯২৩২৬৪৬০৭</p>
+        </section>
+
+        <div id="admin-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-4">
+            <div class="bg-[#111] border border-yellow-600/30 p-8 rounded-3xl w-full max-w-md gold-glow">
+                <div class="flex justify-between mb-6">
+                    <h3 class="text-xl font-bold text-yellow-500">নতুন পণ্য যুক্ত করুন</h3>
+                    <button onclick="closeAdmin()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="space-y-4">
+                    <input type="text" id="p-name" placeholder="পণ্যের নাম" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl focus:border-yellow-500 outline-none">
+                    <input type="number" id="p-price" placeholder="দাম (৳)" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl focus:border-yellow-500 outline-none">
+                    <input type="text" id="p-img" placeholder="ছবির লিঙ্ক (URL)" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl focus:border-yellow-500 outline-none">
+                    <button onclick="addProduct()" class="w-full bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 rounded-xl transition">সংরক্ষণ করুন</button>
+                </div>
             </div>
         </div>
-    </footer>
+
+    </div>
 
     <script>
-        function toggleAdmin() {
-            document.body.classList.toggle('edit-active');
-            alert(document.body.classList.contains('edit-active') ? 'এডমিন মোড চালু হয়েছে! এখন আপনি এডিট করতে পারবেন।' : 'এডমিন মোড বন্ধ হয়েছে।');
+        // GSAP Animations
+        window.onload = () => {
+            const tl = gsap.timeline();
+
+            tl.to(".intro-text", { opacity: 1, duration: 1.5, y: -20, ease: "power4.out" })
+              .to(".intro-text", { opacity: 0, duration: 1, scale: 1.5, filter: "blur(10px)", ease: "power4.in" }, "+=0.5")
+              .to("#intro-layer", { y: "-100%", duration: 1, ease: "expo.inOut" })
+              .to("#main-content", { opacity: 1, duration: 1 }, "-=0.5");
+        };
+
+        // Real Logic (Fake-Free)
+        function openAdmin() { document.getElementById('admin-modal').style.display = 'flex'; }
+        function closeAdmin() { document.getElementById('admin-modal').style.display = 'none'; }
+
+        function addProduct() {
+            const name = document.getElementById('p-name').value;
+            const price = document.getElementById('p-price').value;
+            const img = document.getElementById('p-img').value;
+
+            if(!name || !price) { alert("সব তথ্য দিন"); return; }
+
+            const productContainer = document.getElementById('product-list');
+            const card = `
+                <div class="premium-card p-4 group">
+                    <div class="h-64 rounded-2xl overflow-hidden bg-white/5 mb-4 flex items-center justify-center">
+                        <img src="${img || 'https://via.placeholder.com/300'}" class="max-h-full object-contain group-hover:scale-110 transition duration-500">
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">${name}</h4>
+                    <p class="text-yellow-500 font-bold text-lg mb-4">৳ ${price}</p>
+                    <a href="https://wa.me/8801923264607?text=আমি ${name} অর্ডার করতে চাই" target="_blank" 
+                       class="block text-center border border-yellow-500 text-yellow-500 py-2 rounded-full hover:bg-yellow-500 hover:text-black transition font-semibold">
+                       <i class="fab fa-whatsapp mr-2"></i> WhatsApp Order
+                    </a>
+                </div>
+            `;
+            
+            // প্রথমবার আপলোড করলে 'খালি' টেক্সট সরিয়ে ফেলা
+            if(productContainer.innerHTML.includes("পণ্য দেখতে")) productContainer.innerHTML = "";
+            
+            productContainer.innerHTML += card;
+            closeAdmin();
+            
+            // ক্লিয়ার ফর্ম
+            document.getElementById('p-name').value = "";
+            document.getElementById('p-price').value = "";
+            document.getElementById('p-img').value = "";
         }
     </script>
 </body>
