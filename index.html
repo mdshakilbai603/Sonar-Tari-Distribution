@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>সোনার তরী ডিস্ট্রিবিউশন | Exclusive Inventory</title>
+    <title>সোনার তরী ডিস্ট্রিবিউশন | Exclusive UI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -12,162 +12,194 @@
         
         body {
             font-family: 'Hind Siliguri', sans-serif;
-            background-color: #050505;
-            color: #ffffff;
+            background-color: #020617; /* Ultra Dark Navy */
+            color: #f8fafc;
             overflow-x: hidden;
         }
 
-        /* Intro Animation Styles */
-        #intro-layer {
+        /* Luxury Intro Animation */
+        #luxury-intro {
             position: fixed;
             inset: 0;
-            background: #000;
-            z-index: 100;
+            background: radial-gradient(circle, #1e1b4b 0%, #020617 100%);
+            z-index: 1000;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
 
-        .intro-text {
-            font-size: 4rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #ffd700, #b8860b);
+        .letter {
+            display: inline-block;
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            font-weight: 800;
+            filter: blur(20px);
+            opacity: 0;
+            background: linear-gradient(to bottom, #fbbf24, #d97706);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            opacity: 0;
         }
 
-        /* Glassmorphism & Effects */
-        .premium-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            backdrop-filter: blur(15px);
-            border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* Glass Cards with Neon Border */
+        .neon-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 30px;
+            transition: 0.5s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .premium-card:hover {
-            border-color: #ffd700;
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.1);
+        .neon-card:hover {
+            border-color: #fbbf24;
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.15);
+            transform: scale(1.02);
         }
 
-        .gold-glow {
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-        }
-
-        /* Admin Modal */
-        #admin-modal {
+        /* Admin Dashboard UI */
+        #admin-panel {
             display: none;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
 
-    <div id="intro-layer">
-        <h1 class="intro-text">সোনার তরী ডিস্ট্রিবিউশন</h1>
+    <div id="luxury-intro">
+        <div id="text-container">
+            </div>
+        <div class="h-[2px] w-0 bg-yellow-500 mt-4" id="intro-line"></div>
     </div>
 
-    <div id="main-content" style="opacity: 0;">
-        
-        <nav class="container mx-auto p-6 flex justify-between items-center border-b border-white/5">
-            <div class="flex flex-col">
-                <span class="text-2xl font-bold text-yellow-500">সোনার তরী</span>
-                <span class="text-[10px] tracking-[4px] uppercase text-gray-400">Distribution House</span>
+    <div id="main-site" style="visibility: hidden;">
+        <nav class="p-8 flex justify-between items-center max-w-7xl mx-auto">
+            <div class="group">
+                <h1 class="text-3xl font-black text-yellow-500 tracking-tighter">সোনার তরী</h1>
+                <p class="text-[10px] text-blue-400 tracking-[5px] uppercase">Official Distribution</p>
             </div>
-            <div class="flex items-center gap-6">
-                <button onclick="openAdmin()" class="bg-yellow-600/20 text-yellow-500 px-4 py-2 rounded-full border border-yellow-600/50 hover:bg-yellow-600 hover:text-black transition text-sm">
-                    <i class="fas fa-lock mr-2"></i> Admin Panel
-                </button>
-            </div>
+            <button onclick="checkAdminAccess()" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-yellow-500 hover:text-black transition-all">
+                <i class="fas fa-cog"></i>
+            </button>
         </nav>
 
-        <div class="bg-yellow-600/10 py-3 text-center text-sm text-yellow-200 border-b border-yellow-600/20">
-            <i class="fas fa-map-marker-alt mr-2"></i> প্রধান সড়ক, পুরান বাজার, মাদারীপুর সদর | <i class="fas fa-phone-alt ml-4 mr-2"></i> ০১৯২৩২৬৪৬০৭
+        <header class="text-center py-10">
+            <h2 class="text-gray-500 uppercase tracking-widest text-sm mb-2">Exclusive Inventory</h2>
+            <div class="text-4xl md:text-6xl font-bold">মাদারীপুর সদর জোন</div>
+            <p class="mt-4 text-blue-300"><i class="fas fa-map-marker-alt"></i> পুরান বাজার, মাদারীপুর | <i class="fas fa-phone"></i> ০১৯২৩২৬৪৬০৭</p>
+        </header>
+
+        <main class="max-w-7xl mx-auto p-6">
+            <div id="inventory-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div class="col-span-full py-20 text-center border-2 border-dashed border-white/5 rounded-[40px]" id="empty-msg">
+                    <p class="text-gray-600">গ্যালারি থেকে ফটো যুক্ত করতে এডমিন প্যানেলে যান</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="admin-panel">
+        <div class="max-w-xl mx-auto mt-10 bg-slate-900 p-8 rounded-[40px] border border-yellow-500/30">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-yellow-500">Inventory Control</h2>
+                <button onclick="closeAdmin()" class="text-2xl">&times;</button>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="relative group">
+                    <input type="file" id="upload-file" accept="image/*" class="hidden">
+                    <label for="upload-file" class="w-full h-32 border-2 border-dashed border-gray-700 rounded-3xl flex flex-col items-center justify-center cursor-pointer group-hover:border-yellow-500 transition">
+                        <i class="fas fa-images text-3xl mb-2 text-gray-500"></i>
+                        <span class="text-sm text-gray-500">গ্যালারি থেকে ফটো নিন</span>
+                    </label>
+                </div>
+
+                <input type="text" id="item-name" placeholder="পণ্যের নাম" class="w-full bg-white/5 p-4 rounded-2xl outline-none focus:ring-2 ring-yellow-500">
+                <input type="number" id="item-price" placeholder="মূল্য (৳)" class="w-full bg-white/5 p-4 rounded-2xl outline-none focus:ring-2 ring-yellow-500">
+                
+                <button onclick="saveProduct()" class="w-full bg-yellow-500 text-black font-bold py-5 rounded-2xl shadow-xl shadow-yellow-500/20 active:scale-95 transition">
+                    পণ্যটি ওয়েবসাইটে যুক্ত করুন
+                </button>
+            </div>
         </div>
-
-        <section class="container mx-auto px-4 py-16">
-            <div class="flex justify-between items-end mb-12">
-                <div>
-                    <h2 class="text-4xl font-bold">আমাদের ইনভেন্টরি</h2>
-                    <div class="h-1 w-20 bg-yellow-500 mt-2"></div>
-                </div>
-                <p class="text-gray-400 hidden md:block">এক্সক্লুসিভ স্টেশনারি ও স্পোর্টস সামগ্রী</p>
-            </div>
-
-            <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="premium-card p-6 flex flex-col items-center justify-center border-dashed border-2 border-gray-700 h-[400px]">
-                   <p class="text-gray-500">পণ্য দেখতে এডমিন প্যানেল থেকে আপলোড করুন</p>
-                </div>
-            </div>
-        </section>
-
-        <div id="admin-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-4">
-            <div class="bg-[#111] border border-yellow-600/30 p-8 rounded-3xl w-full max-w-md gold-glow">
-                <div class="flex justify-between mb-6">
-                    <h3 class="text-xl font-bold text-yellow-500">নতুন পণ্য যুক্ত করুন</h3>
-                    <button onclick="closeAdmin()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="space-y-4">
-                    <input type="text" id="p-name" placeholder="পণ্যের নাম" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl focus:border-yellow-500 outline-none">
-                    <input type="number" id="p-price" placeholder="দাম (৳)" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl focus:border-yellow-500 outline-none">
-                    <input type="text" id="p-img" placeholder="ছবির লিঙ্ক (URL)" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl focus:border-yellow-500 outline-none">
-                    <button onclick="addProduct()" class="w-full bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 rounded-xl transition">সংরক্ষণ করুন</button>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <script>
-        // GSAP Animations
-        window.onload = () => {
-            const tl = gsap.timeline();
+        // Intro Logic
+        const introText = "সোনার তরী ডিস্ট্রিবিউশন";
+        const container = document.getElementById('text-container');
+        
+        introText.split("").forEach(char => {
+            const span = document.createElement('span');
+            span.innerText = char === " " ? "\u00A0" : char;
+            span.className = "letter";
+            container.appendChild(span);
+        });
 
-            tl.to(".intro-text", { opacity: 1, duration: 1.5, y: -20, ease: "power4.out" })
-              .to(".intro-text", { opacity: 0, duration: 1, scale: 1.5, filter: "blur(10px)", ease: "power4.in" }, "+=0.5")
-              .to("#intro-layer", { y: "-100%", duration: 1, ease: "expo.inOut" })
-              .to("#main-content", { opacity: 1, duration: 1 }, "-=0.5");
-        };
+        const tl = gsap.timeline();
+        tl.to(".letter", { opacity: 1, filter: "blur(0px)", stagger: 0.05, duration: 1, ease: "power4.out" })
+          .to("#intro-line", { width: "100%", duration: 0.8, ease: "expo.inOut" }, "-=0.5")
+          .to("#luxury-intro", { y: "-100%", duration: 1.2, ease: "expo.inOut", delay: 0.5 })
+          .set("#main-site", { visibility: "visible" });
 
-        // Real Logic (Fake-Free)
-        function openAdmin() { document.getElementById('admin-modal').style.display = 'flex'; }
-        function closeAdmin() { document.getElementById('admin-modal').style.display = 'none'; }
+        // Admin Security
+        function checkAdminAccess() {
+            const pass = prompt("এডমিন পাসওয়ার্ড দিন:");
+            if(pass === "1234") { // রিয়েল পাসওয়ার্ড সিস্টেম
+                document.getElementById('admin-panel').style.display = 'block';
+            } else {
+                alert("ভুল পাসওয়ার্ড!");
+            }
+        }
 
-        function addProduct() {
-            const name = document.getElementById('p-name').value;
-            const price = document.getElementById('p-price').value;
-            const img = document.getElementById('p-img').value;
+        function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
 
-            if(!name || !price) { alert("সব তথ্য দিন"); return; }
+        // Real Gallery Upload & Save Logic
+        function saveProduct() {
+            const name = document.getElementById('item-name').value;
+            const price = document.getElementById('item-price').value;
+            const fileInput = document.getElementById('upload-file');
+            const file = fileInput.files[0];
 
-            const productContainer = document.getElementById('product-list');
-            const card = `
-                <div class="premium-card p-4 group">
-                    <div class="h-64 rounded-2xl overflow-hidden bg-white/5 mb-4 flex items-center justify-center">
-                        <img src="${img || 'https://via.placeholder.com/300'}" class="max-h-full object-contain group-hover:scale-110 transition duration-500">
+            if(!name || !price || !file) {
+                alert("দয়া করে ছবি এবং তথ্য সব ঠিকভাবে দিন");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgData = e.target.result;
+                const grid = document.getElementById('inventory-grid');
+                const emptyMsg = document.getElementById('empty-msg');
+                if(emptyMsg) emptyMsg.remove();
+
+                const card = `
+                    <div class="neon-card p-4 group">
+                        <div class="h-60 rounded-[25px] overflow-hidden bg-white flex items-center justify-center p-4">
+                            <img src="${imgData}" class="max-h-full object-contain group-hover:rotate-6 transition duration-500">
+                        </div>
+                        <div class="mt-6 px-2">
+                            <h3 class="text-xl font-bold">${name}</h3>
+                            <p class="text-yellow-500 text-lg font-black mt-1">৳ ${price}</p>
+                            <a href="https://wa.me/8801923264607?text=আমি ${name} অর্ডার করতে চাই" target="_blank" 
+                               class="mt-4 w-full block text-center py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-yellow-500 hover:text-black font-bold transition">
+                                <i class="fab fa-whatsapp mr-2"></i> WhatsApp Order
+                            </a>
+                        </div>
                     </div>
-                    <h4 class="text-xl font-bold mb-2">${name}</h4>
-                    <p class="text-yellow-500 font-bold text-lg mb-4">৳ ${price}</p>
-                    <a href="https://wa.me/8801923264607?text=আমি ${name} অর্ডার করতে চাই" target="_blank" 
-                       class="block text-center border border-yellow-500 text-yellow-500 py-2 rounded-full hover:bg-yellow-500 hover:text-black transition font-semibold">
-                       <i class="fab fa-whatsapp mr-2"></i> WhatsApp Order
-                    </a>
-                </div>
-            `;
-            
-            // প্রথমবার আপলোড করলে 'খালি' টেক্সট সরিয়ে ফেলা
-            if(productContainer.innerHTML.includes("পণ্য দেখতে")) productContainer.innerHTML = "";
-            
-            productContainer.innerHTML += card;
-            closeAdmin();
-            
-            // ক্লিয়ার ফর্ম
-            document.getElementById('p-name').value = "";
-            document.getElementById('p-price').value = "";
-            document.getElementById('p-img').value = "";
+                `;
+                grid.innerHTML += card;
+                closeAdmin();
+                // Clear inputs
+                document.getElementById('item-name').value = "";
+                document.getElementById('item-price').value = "";
+                fileInput.value = "";
+            };
+            reader.readAsDataURL(file);
         }
     </script>
 </body>
