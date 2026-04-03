@@ -3,192 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>সোনার তরী ডিস্ট্রিবিউশন | Official</title>
+    <title>সোনার তরী ডিস্ট্রিবিউশন | Stationery & Sports</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;500;700&display=swap');
-        body { font-family: 'Hind Siliguri', sans-serif; background: #020617; color: white; overflow-x: hidden; }
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #f8fafc; color: #1e293b; }
         
-        /* Cinematic Text Intro */
-        #intro-screen {
-            position: fixed; inset: 0; background: #000; z-index: 10000;
-            display: flex; justify-content: center; align-items: center;
-        }
-        .intro-text {
-            font-size: clamp(2rem, 10vw, 5rem); font-weight: 800;
-            background: linear-gradient(to right, #fbbf24, #d97706);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: blur(10px); opacity: 0; transform: scale(0.9);
+        /* Mobile Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #f97316; display: flex; justify-content: space-around; padding: 10px 0; z-index: 50; border-top-left-radius: 20px; border-top-right-radius: 20px; }
+        .nav-item { color: white; text-align: center; font-size: 10px; flex: 1; }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 2px; }
+
+        /* Banner Style */
+        .hero-banner { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 15px; }
+
+        @media (min-width: 768px) {
+            .bottom-nav { display: none; }
+            .hero-banner { aspect-ratio: 21/7; }
         }
 
-        /* Hero Banner Style */
-        .hero-banner {
-            width: 100%; max-height: 500px; object-fit: cover;
-            border-radius: 0 0 40px 40px; border-bottom: 2px solid rgba(251, 191, 36, 0.3);
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 30px;
-            transition: 0.4s ease;
-        }
-        .glass-card:hover { border-color: #fbbf24; transform: translateY(-5px); }
+        .category-card { transition: 0.3s; }
+        .category-card:hover { transform: translateY(-5px); color: #f97316; }
         
-        #admin-panel { display: none; }
+        #admin-modal { display: none; }
     </style>
 </head>
-<body>
+<body class="pb-24 md:pb-0">
 
-    <div id="intro-screen">
-        <h1 class="intro-text" id="logo-text">সোনার তরী ডিস্ট্রিবিউশন</h1>
+    <nav class="hidden md:flex bg-white shadow-sm p-4 sticky top-0 z-40 justify-between items-center px-10">
+        <h1 class="text-2xl font-bold text-orange-600">সোনার তরী</h1>
+        <div class="space-x-6">
+            <a href="#" class="hover:text-orange-600">হোম</a>
+            <a href="#" class="hover:text-orange-600">পণ্যসমূহ</a>
+            <button onclick="openAdmin()" class="bg-orange-600 text-white px-4 py-2 rounded-lg">অ্যাডমিন</button>
+        </div>
+    </nav>
+
+    <div class="md:hidden flex justify-between items-center p-4 bg-white sticky top-0 z-40 shadow-sm">
+        <i class="fas fa-bars text-xl" onclick="alert('মেনু আসছে...')"></i>
+        <span class="font-bold text-orange-600">সোনার তরী</span>
+        <i class="fas fa-shopping-cart text-xl"></i>
     </div>
 
-    <div id="wrapper" style="opacity: 0;">
-        <div class="relative">
-            <img src="IMG-20260402-WA0009.jpg" id="main-banner" class="hero-banner" alt="Main Banner">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent"></div>
-            
-            <nav class="absolute top-0 w-full p-6 flex justify-between items-center">
-                <div class="bg-black/40 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/10">
-                    <h2 class="text-xl font-bold text-yellow-500">সোনার তরী</h2>
-                </div>
-                <button onclick="accessAdmin()" class="w-12 h-12 rounded-full bg-yellow-500 text-black shadow-lg flex items-center justify-center hover:scale-110 transition">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </nav>
-        </div>
+    <main class="max-w-7xl mx-auto p-4">
+        <section class="mb-8">
+            <img src="IMG-20260402-WA0009.jpg" id="hero-img" class="hero-banner shadow-lg" alt="Main Banner">
+        </section>
 
-        <div class="max-w-7xl mx-auto px-6 mt-10">
-            <div class="flex flex-col md:flex-row justify-between items-end gap-4 border-b border-white/5 pb-8">
+        <h2 class="text-center text-xl font-bold mb-6">Featured Categories</h2>
+        <div class="grid grid-cols-3 md:grid-cols-6 gap-4 mb-10">
+            <div class="category-card text-center">
+                <div class="bg-white p-4 rounded-full shadow-sm mb-2"><i class="fas fa-pen-nib text-orange-500 text-2xl"></i></div>
+                <p class="text-sm">স্টেশনারি</p>
+            </div>
+            <div class="category-card text-center">
+                <div class="bg-white p-4 rounded-full shadow-sm mb-2"><i class="fas fa-football-ball text-orange-500 text-2xl"></i></div>
+                <p class="text-sm">স্পোর্টস</p>
+            </div>
+            </div>
+
+        <h2 class="text-xl font-bold mb-6">Top Selling Products</h2>
+        <div id="product-container" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            </div>
+    </main>
+
+    <div class="bottom-nav md:hidden">
+        <a href="#" class="nav-item"><i class="fas fa-home"></i>HOME</a>
+        <a href="#" class="nav-item"><i class="fas fa-th-large"></i>MENU</a>
+        <a href="#" class="nav-item"><i class="fas fa-shopping-bag"></i>CART</a>
+        <a href="#" class="nav-item"><i class="fas fa-search"></i>SEARCH</a>
+        <a href="javascript:void(0)" onclick="openAdmin()" class="nav-item"><i class="fas fa-user"></i>ACCOUNT</a>
+    </div>
+
+    <div id="admin-modal" class="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md p-6 rounded-3xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">অ্যাডমিন কন্ট্রোল</h3>
+                <button onclick="closeAdmin()" class="text-2xl">&times;</button>
+            </div>
+            <div class="space-y-4">
                 <div>
-                    <h3 class="text-gray-400 uppercase tracking-widest text-xs mb-2">Inventory Management</h3>
-                    <h2 class="text-4xl font-bold">মাদারীপুর সদর জোন</h2>
+                    <label class="text-sm text-gray-500">ব্যানার পরিবর্তন করুন</label>
+                    <input type="file" id="banner-input" class="w-full mt-1">
                 </div>
-                <p class="text-blue-400"><i class="fas fa-phone-alt"></i> ০১৯২৩২৬৪৬০৭</p>
-            </div>
-
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-12">
-                </div>
-        </div>
-    </div>
-
-    <div id="admin-panel" class="fixed inset-0 z-[11000] bg-black/90 backdrop-blur-2xl p-6 overflow-y-auto">
-        <div class="max-w-lg mx-auto bg-slate-900 border border-yellow-500/20 p-8 rounded-[40px]">
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl font-bold text-yellow-500">Admin Control</h2>
-                <button onclick="closeAdmin()" class="text-3xl">&times;</button>
-            </div>
-
-            <div class="space-y-6">
-                <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                    <p class="text-xs text-gray-400 mb-2 uppercase">Update Main Banner</p>
-                    <input type="file" id="change-banner" accept="image/*" class="text-sm text-gray-500">
-                </div>
-
-                <hr class="border-white/5">
-
-                <p class="text-xs text-gray-400 uppercase">Add New Product</p>
-                <div class="border-2 border-dashed border-gray-700 p-6 rounded-2xl text-center relative">
-                    <input type="file" id="p-img" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
-                    <i class="fas fa-camera text-2xl text-gray-500 mb-2"></i>
-                    <p class="text-xs text-gray-500">গ্যালারি থেকে ফটো দিন</p>
-                </div>
-                <input type="text" id="p-name" placeholder="পণ্যের নাম" class="w-full bg-white/5 p-4 rounded-xl border border-white/10 outline-none">
-                <input type="number" id="p-price" placeholder="দাম (৳)" class="w-full bg-white/5 p-4 rounded-xl border border-white/10 outline-none">
-                
-                <button onclick="saveData()" class="w-full bg-yellow-500 text-black font-bold py-4 rounded-xl active:scale-95 transition">সব সেভ করুন</button>
+                <hr>
+                <input type="text" id="p-name" placeholder="পণ্যের নাম" class="w-full border p-3 rounded-xl">
+                <input type="number" id="p-price" placeholder="দাম (৳)" class="w-full border p-3 rounded-xl">
+                <input type="file" id="p-img" class="w-full">
+                <button onclick="saveAll()" class="w-full bg-orange-600 text-white py-3 rounded-xl font-bold">সেভ করুন</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ইন্ট্রো এনিমেশন
-        window.onload = () => {
-            const tl = gsap.timeline();
-            tl.to("#logo-text", { opacity: 1, filter: "blur(0px)", scale: 1, duration: 1.5, ease: "power4.out" })
-              .to("#intro-screen", { y: "-100%", duration: 1.2, ease: "expo.inOut", delay: 0.5 })
-              .to("#wrapper", { opacity: 1, duration: 0.5 });
-            
-            initSite();
-        };
-
-        function accessAdmin() {
-            if(prompt("পাসওয়ার্ড দিন:") === "1234") {
-                document.getElementById('admin-panel').style.display = 'block';
-            } else { alert("ভুল পাসওয়ার্ড!"); }
+        function openAdmin() { 
+            const pass = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
+            if(pass === "1234") document.getElementById('admin-modal').style.display = 'flex';
         }
-        function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
+        function closeAdmin() { document.getElementById('admin-modal').style.display = 'none'; }
 
-        // রিয়েল মেমোরি লজিক
-        function initSite() {
-            // লোড ব্যানার
-            const savedBanner = localStorage.getItem('site_banner');
-            if(savedBanner) document.getElementById('main-banner').src = savedBanner;
-
-            // লোড প্রোডাক্ট
-            const products = JSON.parse(localStorage.getItem('products_db')) || [];
-            products.forEach(p => renderItem(p));
-        }
-
-        function saveData() {
-            const bannerFile = document.getElementById('change-banner').files[0];
-            const pFile = document.getElementById('p-img').files[0];
+        function saveAll() {
+            const bannerFile = document.getElementById('banner-input').files[0];
             const pName = document.getElementById('p-name').value;
             const pPrice = document.getElementById('p-price').value;
+            const pImgFile = document.getElementById('p-img').files[0];
 
-            // ব্যানার আপডেট
             if(bannerFile) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    localStorage.setItem('site_banner', e.target.result);
-                    document.getElementById('main-banner').src = e.target.result;
-                };
+                    localStorage.setItem('hero_banner', e.target.result);
+                    document.getElementById('hero-img').src = e.target.result;
+                }
                 reader.readAsDataURL(bannerFile);
             }
 
-            // নতুন প্রোডাক্ট আপডেট
-            if(pFile && pName && pPrice) {
+            if(pName && pPrice && pImgFile) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    const newP = { id: Date.now(), name: pName, price: pPrice, img: e.target.result };
-                    const db = JSON.parse(localStorage.getItem('products_db')) || [];
-                    db.push(newP);
-                    localStorage.setItem('products_db', JSON.stringify(db));
-                    renderItem(newP);
-                };
-                reader.readAsDataURL(pFile);
+                    const product = { id: Date.now(), name: pName, price: pPrice, img: e.target.result };
+                    let products = JSON.parse(localStorage.getItem('my_products')) || [];
+                    products.push(product);
+                    localStorage.setItem('my_products', JSON.stringify(products));
+                    renderProducts();
+                }
+                reader.readAsDataURL(pImgFile);
             }
+            closeAdmin();
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('product-container');
+            container.innerHTML = '';
+            const products = JSON.parse(localStorage.getItem('my_products')) || [];
             
-            setTimeout(() => { closeAdmin(); alert("আপডেট সফল হয়েছে!"); }, 500);
+            products.forEach(p => {
+                container.innerHTML += `
+                    <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100">
+                        <img src="${p.img}" class="w-full h-32 object-contain mb-2">
+                        <h4 class="text-sm font-semibold h-10 overflow-hidden">${p.name}</h4>
+                        <p class="text-orange-600 font-bold mb-2">৳ ${p.price}</p>
+                        <a href="https://wa.me/8801923264607?text=আমি এই পণ্যটি কিনতে চাই: ${p.name}" class="block text-center bg-orange-50 text-orange-600 py-2 rounded-lg text-xs font-bold border border-orange-200">অর্ডার করুন</a>
+                    </div>
+                `;
+            });
         }
 
-        function renderItem(p) {
-            const grid = document.getElementById('product-grid');
-            const div = document.createElement('div');
-            div.className = "glass-card p-4 group relative";
-            div.id = `box-${p.id}`;
-            div.innerHTML = `
-                <button onclick="delItem(${p.id})" class="absolute top-2 right-2 w-8 h-8 bg-red-500 rounded-full opacity-0 group-hover:opacity-100 transition z-20"><i class="fas fa-trash text-xs"></i></button>
-                <div class="h-52 bg-white rounded-2xl mb-4 overflow-hidden flex items-center justify-center p-2">
-                    <img src="${p.img}" class="max-h-full object-contain">
-                </div>
-                <h4 class="font-bold text-lg">${p.name}</h4>
-                <p class="text-yellow-500 font-black">৳ ${p.price}</p>
-                <a href="https://wa.me/8801923264607?text=অর্ডার: ${p.name}" class="mt-4 block text-center py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-yellow-500 hover:text-black transition font-bold">WhatsApp Order</a>
-            `;
-            grid.appendChild(div);
-        }
-
-        function delItem(id) {
-            if(confirm("মুছে ফেলতে চান?")) {
-                let db = JSON.parse(localStorage.getItem('products_db')) || [];
-                db = db.filter(x => x.id !== id);
-                localStorage.setItem('products_db', JSON.stringify(db));
-                document.getElementById(`box-${id}`).remove();
-            }
-        }
+        // শুরুতে ডেটা লোড করা
+        window.onload = () => {
+            const savedBanner = localStorage.getItem('hero_banner');
+            if(savedBanner) document.getElementById('hero-img').src = savedBanner;
+            renderProducts();
+        };
     </script>
 </body>
 </html>
