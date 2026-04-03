@@ -3,194 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>সোনার তরী ডিস্ট্রিবিউশন | Real-Time UI</title>
+    <title>সোনার তরী ডিস্ট্রিবিউশন | প্রফেশনাল শপ</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;500;700&display=swap');
-        body { font-family: 'Hind Siliguri', sans-serif; background-color: #f3f4f6; padding-bottom: 80px; }
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #f8f9fa; padding-bottom: 80px; }
         
-        /* Banner Slider Style */
-        .slider-container { width: 100%; height: 220px; position: relative; overflow: hidden; border-radius: 20px; }
-        .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease-in-out; }
+        /* Banner Slider */
+        .slider-wrapper { width: 100%; height: 180px; position: relative; overflow: hidden; border-radius: 12px; }
+        .slide { position: absolute; inset: 0; opacity: 0; transition: 0.8s ease-in-out; }
         .slide.active { opacity: 1; }
         .slide img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Mobile Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #f97316; display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; border-top-left-radius: 25px; border-top-right-radius: 25px; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); }
-        .nav-item { color: white; text-align: center; font-size: 11px; transition: 0.3s; }
-        .nav-item.active { transform: translateY(-5px); font-weight: bold; }
+        /* Bottom Nav - Ghorerbazar Style */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #ff7800; display: flex; justify-content: space-around; padding: 10px 0; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
+        .nav-link { color: white; text-align: center; font-size: 10px; flex: 1; }
+        .nav-link i { font-size: 18px; display: block; margin-bottom: 2px; }
 
-        .product-card { background: white; border-radius: 15px; overflow: hidden; transition: 0.3s; border: 1px solid #eee; }
-        .product-card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-
-        #admin-panel { display: none; }
+        .search-box { position: sticky; top: 0; z-index: 500; background: white; padding: 10px; border-bottom: 1px solid #eee; }
+        .product-card { background: white; border-radius: 10px; border: 1px solid #f0f0f0; transition: 0.3s; }
     </style>
 </head>
 <body>
 
-    <header class="bg-white p-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
-        <div class="flex items-center gap-2">
-            <div class="bg-orange-600 text-white p-2 rounded-lg font-bold">ST</div>
-            <h1 class="text-xl font-bold text-gray-800">সোনার তরী</h1>
+    <div class="p-3 bg-white flex justify-between items-center">
+        <img src="https://sonar-tari-distribution.vercel.app/logo.png" class="h-8" alt="Logo">
+        <div class="flex gap-4 items-center">
+            <button onclick="openAdmin()" class="text-orange-500 text-sm font-bold"><i class="fas fa-lock"></i> অ্যাডমিন</button>
+            <div class="relative">
+                <i class="fas fa-shopping-basket text-xl text-gray-600"></i>
+                <span class="absolute -top-2 -right-2 bg-orange-600 text-white text-[10px] px-1.5 rounded-full">0</span>
+            </div>
         </div>
-        <button onclick="openAdmin()" class="text-orange-600 border border-orange-600 px-3 py-1 rounded-full text-sm font-bold">অ্যাডমিন</button>
-    </header>
+    </div>
 
-    <main class="p-4 max-w-5xl mx-auto">
-        <div class="slider-container shadow-lg mb-8" id="main-slider">
+    <div class="search-box">
+        <div class="relative flex items-center bg-gray-100 rounded-full px-4 py-2 border border-orange-200 focus-within:border-orange-500">
+            <i class="fas fa-search text-gray-400 mr-2"></i>
+            <input type="text" id="mainSearch" oninput="searchProducts()" placeholder="আপনি কী খুঁজছেন?" class="bg-transparent w-full outline-none text-sm">
+        </div>
+    </div>
+
+    <main class="p-3 max-w-lg mx-auto">
+        <div class="slider-wrapper shadow-sm mb-6" id="bannerSlider">
             </div>
 
-        <div class="flex justify-around mb-8 bg-white p-4 rounded-2xl shadow-sm">
-            <div class="text-center"><i class="fas fa-pencil-alt text-orange-500 text-xl"></i><p class="text-xs mt-1">খাতা-কলম</p></div>
-            <div class="text-center"><i class="fas fa-volleyball-ball text-blue-500 text-xl"></i><p class="text-xs mt-1">স্পোর্টস</p></div>
-            <div class="text-center"><i class="fas fa-puzzle-piece text-green-500 text-xl"></i><p class="text-xs mt-1">খেলনা</p></div>
-            <div class="text-center"><i class="fas fa-calculator text-purple-500 text-xl"></i><p class="text-xs mt-1">অফিস</p></div>
-        </div>
+        <h2 class="font-bold text-gray-800 mb-3 px-1">ক্যাটাগরি</h2>
+        <div class="grid grid-cols-4 gap-2 mb-6">
+            <div class="text-center bg-white p-2 rounded-xl shadow-sm border border-gray-50">
+                <i class="fas fa-pen-nib text-orange-500"></i>
+                <p class="text-[10px] mt-1">স্টেশনারি</p>
+            </div>
+            <div class="text-center bg-white p-2 rounded-xl shadow-sm border border-gray-50">
+                <i class="fas fa-basketball-ball text-blue-500"></i>
+                <p class="text-[10px] mt-1">স্পোর্টস</p>
+            </div>
+            </div>
 
-        <h2 class="text-lg font-bold mb-4 flex justify-between items-center">
-            সব পণ্যসমূহ <span class="text-xs text-gray-400">Total: <span id="item-count">0</span></span>
-        </h2>
-        <div id="product-list" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="flex justify-between items-center mb-4 px-1">
+            <h2 class="font-bold text-gray-800">পণ্যসমূহ</h2>
+            <span class="text-xs text-gray-400">Total: <span id="totalItems">0</span></span>
+        </div>
+        <div id="productList" class="grid grid-cols-2 gap-3">
             </div>
     </main>
 
     <div class="bottom-nav">
-        <a href="#" class="nav-item active"><i class="fas fa-home text-lg"></i><br>হোম</a>
-        <a href="#" class="nav-item"><i class="fas fa-th-large text-lg"></i><br>মেনু</a>
-        <a href="#" class="nav-item"><i class="fas fa-shopping-cart text-lg"></i><br>কার্ট</a>
-        <a href="javascript:void(0)" onclick="openAdmin()" class="nav-item"><i class="fas fa-user-cog text-lg"></i><br>অ্যাডমিন</a>
+        <a href="#" class="nav-link"><i class="fas fa-home"></i>HOME</a>
+        <a href="#" class="nav-link"><i class="fas fa-th-large"></i>MENU</a>
+        <a href="#" class="nav-link"><i class="fas fa-shopping-cart"></i>CART</a>
+        <a href="javascript:void(0)" onclick="openAdmin()" class="nav-link"><i class="fas fa-user"></i>ACCOUNT</a>
     </div>
 
-    <div id="admin-panel" class="fixed inset-0 bg-black/60 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-md p-6 rounded-[30px] shadow-2xl">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-bold">ম্যানেজ ইনভেন্টরি</h3>
-                <button onclick="closeAdmin()" class="text-2xl text-gray-400">&times;</button>
-            </div>
+    <div id="adminModal" class="fixed inset-0 bg-black/70 z-[2000] hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-3xl p-6 relative">
+            <button onclick="closeAdmin()" class="absolute top-4 right-4 text-gray-400 text-2xl">&times;</button>
+            <h3 class="text-xl font-bold mb-4 border-b pb-2">অ্যাডমিন কন্ট্রোল</h3>
             
-            <div class="space-y-4">
-                <div class="bg-orange-50 p-4 rounded-2xl border border-orange-100">
-                    <p class="text-xs font-bold text-orange-600 mb-2">নতুন স্লাইডার ব্যানার যোগ করুন</p>
-                    <input type="file" id="banner-file" class="text-xs">
-                    <button onclick="addBanner()" class="mt-2 w-full bg-orange-600 text-white py-2 rounded-xl text-xs">ব্যানার যুক্ত করুন</button>
+            <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
+                <div class="bg-gray-50 p-3 rounded-xl border">
+                    <p class="text-xs font-bold text-gray-500 mb-2 uppercase">ব্যানার ম্যানেজমেন্ট</p>
+                    <input type="file" id="bannerInp" class="text-xs w-full mb-2">
+                    <button onclick="saveBanner()" class="w-full bg-orange-500 text-white py-2 rounded-lg text-xs font-bold">ব্যানার আপলোড</button>
+                    <div id="bannerManageList" class="mt-3 space-y-1"></div>
                 </div>
 
-                <hr class="border-gray-100">
-
-                <input type="text" id="p-name" placeholder="পণ্যের নাম" class="w-full border p-3 rounded-xl outline-none focus:ring-2 ring-orange-500 text-sm">
-                <input type="number" id="p-price" placeholder="মূল্য (৳)" class="w-full border p-3 rounded-xl outline-none text-sm">
-                <input type="file" id="p-image" class="w-full text-xs">
-                
-                <button onclick="addProduct()" class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold shadow-lg">পণ্য আপলোড করুন</button>
+                <div class="bg-gray-50 p-3 rounded-xl border">
+                    <p class="text-xs font-bold text-gray-500 mb-2 uppercase">নতুন পণ্য যোগ করুন</p>
+                    <input type="text" id="pName" placeholder="পণ্যের নাম" class="w-full border p-2 mb-2 rounded-lg text-sm">
+                    <input type="number" id="pPrice" placeholder="মূল্য" class="w-full border p-2 mb-2 rounded-lg text-sm">
+                    <input type="file" id="pImg" class="text-xs mb-2">
+                    <button onclick="saveProduct()" class="w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold">পণ্য সেভ করুন</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // ১. ডেটা লোড লজিক
+        // ডেটা ইনিশিয়ালাইজেশন
         let products = JSON.parse(localStorage.getItem('st_products')) || [];
         let banners = JSON.parse(localStorage.getItem('st_banners')) || [];
 
-        function openAdmin() { 
-            if(prompt("পাসওয়ার্ড দিন:") === "1234") document.getElementById('admin-panel').style.display = 'flex';
-        }
-        function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
+        function openAdmin() { if(prompt("Pass?") === "123") { document.getElementById('adminModal').classList.remove('hidden'); renderAdminLists(); } }
+        function closeAdmin() { document.getElementById('adminModal').classList.add('hidden'); }
 
-        // ২. ব্যানার স্লাইডার কন্ট্রোল
-        function addBanner() {
-            const file = document.getElementById('banner-file').files[0];
-            if(!file) return alert("ছবি সিলেক্ট করুন");
+        // স্লাইডার এবং প্রোডাক্ট সেভ লজিক
+        function saveBanner() {
+            const file = document.getElementById('bannerInp').files[0];
+            if(!file) return;
             const reader = new FileReader();
             reader.onload = (e) => {
                 banners.push(e.target.result);
                 localStorage.setItem('st_banners', JSON.stringify(banners));
-                renderBanners();
-                alert("ব্যানার যুক্ত হয়েছে!");
+                renderAll();
+                renderAdminLists();
             };
             reader.readAsDataURL(file);
         }
 
-        function renderBanners() {
-            const slider = document.getElementById('main-slider');
-            if(banners.length === 0) {
-                slider.innerHTML = `<div class="slide active bg-gray-200 flex items-center justify-center text-gray-400">ব্যানার আপলোড করুন</div>`;
-                return;
-            }
-            slider.innerHTML = banners.map((img, index) => `
-                <div class="slide ${index === 0 ? 'active' : ''}">
-                    <img src="${img}">
-                    <button onclick="deleteBanner(${index})" class="absolute top-2 right-2 bg-red-500 text-white w-6 h-6 rounded-full text-[10px] z-20">X</button>
-                </div>
-            `).join('');
-            startSlider();
-        }
-
-        let slideIndex = 0;
-        function startSlider() {
-            const slides = document.querySelectorAll('.slide');
-            if(slides.length <= 1) return;
-            setInterval(() => {
-                slides[slideIndex].classList.remove('active');
-                slideIndex = (slideIndex + 1) % slides.length;
-                slides[slideIndex].classList.add('active');
-            }, 4000);
-        }
-
-        function deleteBanner(index) {
-            banners.splice(index, 1);
-            localStorage.setItem('st_banners', JSON.stringify(banners));
-            renderBanners();
-        }
-
-        // ৩. প্রোডাক্ট ম্যানেজমেন্ট
-        function addProduct() {
-            const name = document.getElementById('p-name').value;
-            const price = document.getElementById('p-price').value;
-            const file = document.getElementById('p-image').files[0];
-
-            if(!name || !price || !file) return alert("সব তথ্য দিন!");
+        function saveProduct() {
+            const name = document.getElementById('pName').value;
+            const price = document.getElementById('pPrice').value;
+            const file = document.getElementById('pImg').files[0];
+            if(!name || !price || !file) return;
 
             const reader = new FileReader();
             reader.onload = (e) => {
-                const item = { id: Date.now(), name, price, img: e.target.result };
-                products.push(item);
+                products.push({ id: Date.now(), name, price, img: e.target.result });
                 localStorage.setItem('st_products', JSON.stringify(products));
-                renderProducts();
-                closeAdmin();
+                renderAll();
+                renderAdminLists();
             };
             reader.readAsDataURL(file);
         }
 
-        function renderProducts() {
-            const list = document.getElementById('product-list');
-            document.getElementById('item-count').innerText = products.length;
-            list.innerHTML = products.map(p => `
-                <div class="product-card p-3 relative group">
-                    <button onclick="deleteProduct(${p.id})" class="absolute top-2 right-2 bg-red-100 text-red-600 w-7 h-7 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-trash-alt text-xs"></i></button>
-                    <div class="h-32 flex items-center justify-center mb-2">
-                        <img src="${p.img}" class="max-h-full object-contain">
-                    </div>
-                    <h3 class="text-sm font-bold text-gray-700 h-10 overflow-hidden leading-tight">${p.name}</h3>
-                    <p class="text-orange-600 font-black mt-1">৳ ${p.price}</p>
-                    <a href="https://wa.me/8801923264607?text=অর্ডার: ${p.name}" class="mt-3 block text-center py-2 bg-orange-600 text-white rounded-xl text-xs font-bold">অর্ডার দিন</a>
+        // ডিলিট লজিক (অ্যাডমিন থেকে)
+        function deleteItem(type, idOrIdx) {
+            if(confirm("আপনি কি নিশ্চিত?")) {
+                if(type === 'banner') banners.splice(idOrIdx, 1);
+                else products = products.filter(p => p.id !== idOrIdx);
+                
+                localStorage.setItem(`st_${type}s`, JSON.stringify(type === 'banner' ? banners : products));
+                renderAll();
+                renderAdminLists();
+            }
+        }
+
+        // সার্চ লজিক
+        function searchProducts() {
+            const term = document.getElementById('mainSearch').value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+            renderProducts(filtered);
+        }
+
+        // রেন্ডার ফাংশনসমূহ
+        function renderAll() {
+            // স্লাইডার রেন্ডার
+            const slider = document.getElementById('bannerSlider');
+            if(banners.length === 0) slider.innerHTML = `<div class="slide active bg-orange-100 flex items-center justify-center text-orange-400 text-sm">ব্যানার আপলোড করুন</div>`;
+            else {
+                slider.innerHTML = banners.map((img, i) => `
+                    <div class="slide ${i === 0 ? 'active' : ''}"><img src="${img}"></div>
+                `).join('');
+                startAutoSlider();
+            }
+            renderProducts(products);
+        }
+
+        function renderProducts(data) {
+            document.getElementById('totalItems').innerText = data.length;
+            document.getElementById('productList').innerHTML = data.map(p => `
+                <div class="product-card p-2 relative group">
+                    <img src="${p.img}" class="w-full h-32 object-contain mb-2">
+                    <h3 class="text-[12px] font-bold text-gray-700 leading-tight h-8 overflow-hidden">${p.name}</h3>
+                    <p class="text-orange-600 font-bold text-sm mt-1">৳ ${p.price}</p>
+                    <button class="w-full bg-orange-50 text-orange-600 border border-orange-200 py-1.5 rounded-lg text-[10px] font-bold mt-2 hover:bg-orange-600 hover:text-white transition">অর্ডার করুন</button>
                 </div>
             `).join('');
         }
 
-        function deleteProduct(id) {
-            if(confirm("মুছে ফেলতে চান?")) {
-                products = products.filter(p => p.id !== id);
-                localStorage.setItem('st_products', JSON.stringify(products));
-                renderProducts();
-            }
+        function renderAdminLists() {
+            document.getElementById('bannerManageList').innerHTML = banners.map((img, i) => `
+                <div class="flex justify-between items-center bg-white p-1 border rounded">
+                    <span class="text-[10px]">ব্যানার #${i+1}</span>
+                    <button onclick="deleteItem('banner', ${i})" class="text-red-500 text-xs">মুছুন</button>
+                </div>
+            `).join('');
         }
 
-        window.onload = () => {
-            renderBanners();
-            renderProducts();
-        };
+        let slideIdx = 0;
+        function startAutoSlider() {
+            const slides = document.querySelectorAll('.slide');
+            if(slides.length < 2) return;
+            setInterval(() => {
+                slides[slideIdx].classList.remove('active');
+                slideIdx = (slideIdx + 1) % slides.length;
+                slides[slideIdx].classList.add('active');
+            }, 4000);
+        }
+
+        window.onload = renderAll;
     </script>
 </body>
 </html>
